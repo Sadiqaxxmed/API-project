@@ -46,4 +46,3 @@ module.exports = {
     await queryInterface.dropTable(options);
   }
 };
-// npx sequelize migration:generate --name addFullName-user
