@@ -10,10 +10,10 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
     return [
-      await queryInterface.addColumn('User', 'firstName', {
+      await queryInterface.addColumn('Users', 'firstName', {
         type: Sequelize.STRING
       }),
-      await queryInterface.addColumn('User', 'lastName', {
+      await queryInterface.addColumn('Users', 'lastName', {
         type: Sequelize.STRING
       }),
     ];
@@ -28,8 +28,8 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     return [
-      await queryInterface.removeColumn('User', 'firstName'),
-      await queryInterface.removeColumn('User', 'lastName'),
+      await queryInterface.removeColumn('Users', 'firstName'),
+      await queryInterface.removeColumn('Users', 'lastName'),
     ];
   }
 };
