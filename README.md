@@ -154,7 +154,7 @@ information.
     }
     ```
 
-### Sign Up a User
+### Sign up a User
 
 Creates a new user, logs them in as the current user, and returns the current
 user's information.
