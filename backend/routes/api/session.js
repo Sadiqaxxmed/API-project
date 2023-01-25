@@ -52,44 +52,45 @@ router.delete(
   }
 );
 
-// router.get(
-//   '/',
-//   restoreUser,
-//   (req, res) => {
-//     const { user } = req;
-//     if (user) {
-//       return res.json({
-//         user: user.toSafeObject()
-//       });
-//     } else return res.json({ user: null });
-//   }
-// );
+// Restrore session user
+router.get(
+  '/',
+  restoreUser,
+  (req, res) => {
+      const { user } = req;
+      if (user) {
+          return res.json({
+              user: user
+          });
+      } else return res.json({ user: null });
+  }
+);
 
 //Get current user
 
-router.get('/',
-restoreUser,
-(req, res) => {
-  // Check if a user is logged in
-  const { user } = req;
+// router.get('/',
+// restoreUser,
+// (req, res) => {
+//   // Check if a user is logged in
+//   const { user } = req;
 
-  if (user) {
-    // If a user is logged in, return the user's information
-    return res.status(200).json({
+//   if (user) {
+//     // If a user is logged in, return the user's information
+//     return res.status(200).json({
 
-      user: {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        username: user.username
-      }
-    });
-  } else {
-    // If no user is logged in, return null
-   return res.status(200).json({ user: null });
-  }
-});
+//       user: {
+//         id: user.id,
+//         firstName: user.firstName,
+//         lastName: user.lastName,
+//         email: user.email,
+//         username: user.username
+//       }
+//     });
+//   } else {
+//     // If no user is logged in, return null
+//    return res.status(200).json({ user: null });
+//   }
+// });
 
 
 module.exports = router;
