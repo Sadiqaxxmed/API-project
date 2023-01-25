@@ -31,16 +31,55 @@ const validateSignup = [
 router.post(
   '/',
   validateSignup,
-  async (req, res) => {
-    const { firstName, lastName, email, password, username } = req.body;
-    const user = await User.signup({ firstName, lastName, email, username, password });
+  async (req, res, next) => {
 
-    await setTokenCookie(res, user);
+    const { email, password, username, firstName, lastName } = req.body;
+const err = {};
 
-    return res.json({
-      user: user
-    });
-  }
+// Check if email or username already exists
+const checkUserName = await User.findOne({ where: { username: username } });
+const checkEmail = await User.findOne({ where: { email: email } });
+
+if (checkEmail) {
+    err.title = "Validation error";
+    err.message = "User already exists";
+    err.status = 403;
+    err.errors = ["User with that email already exists"];
+    return next(err);
+}
+
+if (checkUserName) {
+    err.title = "Validation error";
+    err.message = "User already exists";
+    err.status = 403;
+    err.errors = ["User with that username already exists"];
+    return next(err);
+}
+
+// Validate input fields
+if (!email || !username || !firstName || !lastName) {
+    err.title = "Validation error";
+    err.message = "Validation error";
+    err.status = 400;
+    err.errors = [];
+
+    if (!email) err.errors.push("Invalid email");
+    if (!username) err.errors.push("Invalid userName");
+    if (!firstName) err.errors.push("Invalid firstName");
+    if (!lastName) err.errors.push("Invalid lastName");
+
+    return next(err);
+}
+
+// Create user
+const user = await User.signup({ email, username, password, firstName, lastName });
+
+// Generate token and set cookie
+let token = await setTokenCookie(res, user);
+
+return res.json({ user });
+
+},
 );
 
 
