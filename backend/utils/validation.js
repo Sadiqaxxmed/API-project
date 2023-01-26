@@ -50,7 +50,19 @@ const validateSpot = [
   handleValidationErrors
 ];
 
+const validateSpotImage = [
+  check('url')
+      .notEmpty()
+      .withMessage('url must be defined'),
+  check('preview')
+      .notEmpty()
+      .isBoolean()
+      .withMessage('preview must be a boolean value'),
+  handleValidationErrors
+];
+
 module.exports = {
   handleValidationErrors,
-  validateSpot
+  validateSpot,
+  validateSpotImage
 };
