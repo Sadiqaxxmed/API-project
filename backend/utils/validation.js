@@ -72,10 +72,18 @@ const validateReview = [
   handleValidationErrors
 ];
 
+const validateReviewImage = [
+  check('url')
+      .notEmpty()
+      .withMessage('url must be defined'),
+  handleValidationErrors
+];
+
 
 module.exports = {
   handleValidationErrors,
   validateSpot,
   validateSpotImage,
-  validateReview
+  validateReview,
+  validateReviewImage
 };
