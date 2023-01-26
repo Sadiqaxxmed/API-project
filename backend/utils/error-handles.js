@@ -33,7 +33,7 @@ const usersSpot = async (req, res, next) => {
       return next(err);
   }
   return next();
-}
+};
 
 const usersReview = async (req, res, next) => {
   const { reviewId } = req.params;
@@ -63,7 +63,7 @@ const reviewExists = async (req, res, next) => {
       return next(err)
   };
   return next();
-}
+};
 
 
 

@@ -61,8 +61,21 @@ const validateSpotImage = [
   handleValidationErrors
 ];
 
+const validateReview = [
+  check('review')
+      .notEmpty()
+      .withMessage('Review text is required'),
+  check('stars')
+      .notEmpty()
+      .isInt({ min: 1, max: 5 })
+      .withMessage('Stars must be an integer from 1 to 5'),
+  handleValidationErrors
+];
+
+
 module.exports = {
   handleValidationErrors,
   validateSpot,
-  validateSpotImage
+  validateSpotImage,
+  validateReview
 };
