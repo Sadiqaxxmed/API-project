@@ -7,6 +7,37 @@ const { handleValidationErrors, validateReview, validateReviewImage } = require(
 const sequelize = require('sequelize');
 const { reviewExists, usersReview } = require('../../utils/error-handles')
 
+//Add an Image to a Review based on the Review's id
+router.post("/:reviewId/images", requireAuth, reviewExists, usersReview, validateReviewImage, async (req, res, next) => {
+  try {
+    const { reviewId } = req.params;
+    const { url } = req.body;
+    const user = req.user;
+
+    const review = await Review.findByPk(reviewId);
+
+    let allReviewImages = await review.getReviewImages();
+
+    if (allReviewImages.length >= 10) {
+      const error = new Error("Cannot add any more images because there is a maximum of 10 images per resource");
+      error.message = "Maximum number of images for this resource was reached";
+      error.status = 403;
+      throw error;
+    }
+
+    const newReviewImage = await review.createReviewImage({
+        url: url
+    });
+
+    res.json({
+        id: newReviewImage.id,
+        url: newReviewImage.url
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 //Edit a Review
 router.put('/:reviewId', requireAuth, validateReview, reviewExists, usersReview, async (req, res, next) => {
   const { reviewId } = req.params;
@@ -23,33 +54,6 @@ router.put('/:reviewId', requireAuth, validateReview, reviewExists, usersReview,
   return res.json(editReview);
 })
 
-// router.put('/:reviewId',
-//   requireAuth,
-//   validateReview,
-//   async (req, res, next) => {
-//     try {
-//         const { reviewId } = req.params;
-//         const { review, stars } = req.body;
-//         const user = req.user;
-
-//         // Check if review exists and belongs to user
-//         const reviewToEdit = await Review.findOne({
-//           where: { id: reviewId, userId: user.id }
-//         });
-//         if (!reviewToEdit) {
-//           return res.status(404).json({ message: "Review not found or not belongs to user" });
-//         }
-
-//         // Update review
-//         reviewToEdit.review = review;
-//         reviewToEdit.stars = stars;
-//         await reviewToEdit.save();
-
-//         return res.json(reviewToEdit);
-//     } catch (error) {
-//         next(error);
-//     }
-// });
 
 //Delete review
 router.delete("/:reviewId", requireAuth, reviewExists, usersReview, async (req, res) => {
