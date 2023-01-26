@@ -66,31 +66,4 @@ router.get(
   }
 );
 
-//Get current user
-
-// router.get('/',
-// restoreUser,
-// (req, res) => {
-//   // Check if a user is logged in
-//   const { user } = req;
-
-//   if (user) {
-//     // If a user is logged in, return the user's information
-//     return res.status(200).json({
-
-//       user: {
-//         id: user.id,
-//         firstName: user.firstName,
-//         lastName: user.lastName,
-//         email: user.email,
-//         username: user.username
-//       }
-//     });
-//   } else {
-//     // If no user is logged in, return null
-//    return res.status(200).json({ user: null });
-//   }
-// });
-
-
 module.exports = router;
