@@ -35,9 +35,41 @@ const usersSpot = async (req, res, next) => {
   return next();
 }
 
+const usersReview = async (req, res, next) => {
+  const { reviewId } = req.params;
+  const user = req.user
+  const review = await Review.findByPk(reviewId);
+
+  if (review.userId !== user.id) {
+      const err = {};
+      err.title = "Authorization error";
+      err.status = 403;
+      err.message = "Review doesn't belong to current user";
+      return next(err);
+  }
+  return next();
+};
+
+// If Review exists for Review
+const reviewExists = async (req, res, next) => {
+  const { reviewId } = req.params;
+  const review = await Review.findByPk(reviewId)
+
+  if (!review) {
+      const err = {}
+      err.title = "Couldn't find a Review with the specified id";
+      err.message = "Review couldn't be found";
+      err.status = 404;
+      return next(err)
+  };
+  return next();
+}
+
 
 
 module.exports = {
   spotExists,
-  usersSpot
+  usersSpot,
+  usersReview,
+  reviewExists
 }
