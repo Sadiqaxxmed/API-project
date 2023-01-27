@@ -312,6 +312,44 @@ router.get('/:spotId', spotExists, async (req, res, next) => {
 
 });
 
+//Get all review by spotid
+
+router.get('/:spotId/reviews', spotExists, async (req, res, next) => {
+  const { spotId } = req.params;
+  const spot = await Spot.findByPk(spotId);
+
+  const reviews = await spot.getReviews({
+    include: [
+        {
+            model: User,
+            attributes: ['id', 'firstName', 'lastName']
+        },
+        {
+            model: ReviewImage,
+            attributes: ['id', 'url']
+        }
+    ]
+});
+
+  let reviewsArr = [];
+  reviews.forEach(review => {
+    let eachReview = review.toJSON();
+
+    if (!eachReview.ReviewImages.length > 0) {
+        eachReview.ReviewImages = "No review images available"
+    }
+
+    reviewsArr.push(eachReview);
+  })
+
+  if (!reviewsArr.length) {
+    return res.json("This spot has no reviews");
+  }
+
+  res.json({
+    reviews: reviewsArr
+  });
+});
 
 //Create a spot
 router.post('/', requireAuth, validateSpot, async (req, res, next) => {
