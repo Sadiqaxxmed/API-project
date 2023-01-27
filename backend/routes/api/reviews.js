@@ -7,6 +7,66 @@ const { handleValidationErrors, validateReview, validateReviewImage } = require(
 const sequelize = require('sequelize');
 const { reviewExists, usersReview } = require('../../utils/error-handles')
 
+//Get reviews of current user
+router.get('/current', requireAuth, async (req, res) => {
+  const userId = req.user.id;
+  try {
+      const reviews = await Review.findAll({
+          where: {
+              userId: userId
+          },
+          include: [
+              {
+                  model: User,
+                  attributes: ['id', 'firstName', 'lastName']
+              },
+              {
+                  model: Spot,
+                  attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
+                  include: [{
+                      model: SpotImage,
+                      attributes: ['url', 'preview']
+                  }]
+              },
+              {
+                  model: ReviewImage,
+                  attributes: ['id', 'url']
+              }
+          ]
+      });
+
+      if (reviews.length === 0) {
+          return res.status(204).json({ message: 'No reviews found for current user.' });
+      }
+
+      let reviewArr = [];
+      for (const review of reviews) {
+          let eachReview = review.toJSON();
+          if (eachReview.Spot.SpotImages.length > 0) {
+              let previewImage;
+              for (const spotImage of eachReview.Spot.SpotImages) {
+                  if (spotImage.preview === true) {
+                      previewImage = spotImage.url;
+                      break;
+                  }
+              }
+              eachReview.Spot.previewImage = previewImage || 'No preview image available';
+          } else {
+              eachReview.Spot.previewImage = 'No preview image available';
+          }
+
+          delete eachReview.Spot.SpotImages;
+          reviewArr.push(eachReview);
+      }
+
+      res.json({ Reviews: reviewArr });
+  } catch (error) {
+      res.status(500).json({ message: 'Error fetching reviews for current user.' });
+  }
+});
+
+
+
 //Add an Image to a Review based on the Review's id
 router.post("/:reviewId/images", requireAuth, reviewExists, usersReview, validateReviewImage, async (req, res, next) => {
   try {
