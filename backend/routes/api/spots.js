@@ -4,20 +4,162 @@ const router = express.Router();
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User, Spot, Review, SpotImage, ReviewImage, Booking } = require('../../db/models');
 
-const { validateSpot, validateSpotImage } = require('../../utils/validation');
+const { validateSpot, validateSpotImage, validateQuery } = require('../../utils/validation');
 
 const { spotExists, usersSpot, convertDate } = require('../../utils/error-handles')
 
 
 
 //Get all spots
-router.get('/', async (req, res, next) => {
-  try {
-      const spots = await Spot.findAll();
-      return res.json({ spots });
-  } catch (error) {
-      return next(error);
+router.get('/', validateQuery, async (req, res, next) => {
+
+  const { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+
+  let pagination = {};
+
+  const defaultPage = 1;
+  const defaultSize = 20;
+  const maxPage = 10;
+  const maxSize = 20;
+
+  pagination.page = Number(page) || defaultPage;
+  pagination.size = Number(size) || defaultSize;
+
+  if (pagination.page > maxPage) {
+    pagination.page = maxPage;
   }
+
+  if (pagination.size > maxSize) {
+    pagination.size = maxSize;
+  }
+
+  pagination.offset = pagination.size * (pagination.page - 1);
+
+  const query = {
+    where: {},
+    include: [],
+    ...pagination
+  };
+
+  const reviewInclude = {
+    model: Review,
+    attributes: ['stars']
+  };
+  query.include.push(reviewInclude);
+
+  const imageInclude = {
+    model: SpotImage,
+    attributes: ['url', 'preview']
+  };
+
+  query.include.push(imageInclude);
+
+  const latWhere = {}
+  if (maxLat && !minLat) {
+      latWhere.lat = {
+      [Op.lte]: maxLat
+    }
+  } else if (!maxLat && minLat) {
+      latWhere.lat = {
+        [Op.gte]: minLat
+    }
+  } else if (maxLat && minLat) {
+      latWhere.lat = {
+        [Op.and]: {
+        [Op.lte]: maxLat,
+        [Op.gte]: minLat
+    }
+  }
+}
+
+  if (Object.keys(latWhere).length > 0) {
+    query.where = {...query.where, ...latWhere};
+  }
+
+  const lngWhere = {}
+  if (maxLng && !minLng) {
+    lngWhere.lng = {
+      [Op.lte]: maxLng
+    }
+  } else if (!maxLng && minLng) {
+      lngWhere.lng = {
+        [Op.gte]: minLng
+    }
+  } else if (maxLng && minLng) {
+      lngWhere.lng = {
+          [Op.and]: {
+          [Op.lte]: maxLng,
+          [Op.gte]: minLng
+    }
+  }
+}
+
+  if (Object.keys(lngWhere).length > 0) {
+    query.where = {...query.where, ...lngWhere};
+  }
+
+  const priceWhere = {}
+  if (maxPrice && !minPrice) {
+      priceWhere.price = {
+        [Op.lte]: maxPrice
+    }
+  } else if (!maxPrice && minPrice) {
+      priceWhere.price = {
+        [Op.gte]: minPrice
+    }
+  } else if (maxPrice && minPrice) {
+      priceWhere.price = {
+          [Op.and]: {
+          [Op.lte]: maxPrice,
+          [Op.gte]: minPrice
+    }
+  }
+}
+
+  if (Object.keys(priceWhere).length > 0) {
+    query.where = {...query.where, ...priceWhere};
+  }
+
+  const spots = await Spot.findAll(query);
+
+  const spotsArr = spots.map(spot => {
+    const spotData = spot.toJSON();
+    const { Reviews, SpotImages } = spotData;
+    let avgRating = "No current ratings";
+    if (Reviews.length > 0) {
+        const sum = Reviews.reduce((acc, { stars }) => acc + stars, 0);
+        avgRating = sum / Reviews.length;
+    }
+    spotData.avgRating = avgRating;
+    let previewImage = "No preview image available";
+    if (SpotImages.length > 0) {
+        const previewImageData = SpotImages.find(({ preview }) => preview);
+        if (previewImageData) {
+            previewImage = previewImageData.url;
+        }
+    }
+    spotData.previewImage = previewImage;
+    delete spotData.Reviews;
+    delete spotData.SpotImages;
+    return spotData;
+});
+
+  if (!spotsArr.length) {
+    res.json("Sorry, no current spots")
+  } else {
+    res.json({
+        Spots: spotsArr,
+        page: page,
+        size: size
+  });
+}
+
+  // try {
+  //     const spots = await Spot.findAll();
+  //     return res.json({ spots });
+  // } catch (error) {
+  //     return next(error);
+  // }
 });
 
 //Create a spot
