@@ -3,6 +3,13 @@ const express = require('express');
 const router = express.Router();
 const { User, Spot, Review, SpotImage, ReviewImage, Booking } = require('../db/models');
 
+const convertDate = (date) => {
+  const [year, month, day] = date.split("-");
+  const monthIndex = month - 1;
+  const newDate = new Date(year, monthIndex, date)
+  return date;
+}
+
 
 const spotExists = async (req, res, next) => {
   let { spotId } = req.params;
@@ -65,11 +72,27 @@ const reviewExists = async (req, res, next) => {
   return next();
 };
 
+// If Booking exists for Booking
+const bookingExists = async (req, res, next) => {
+  const { bookingId } = req.params;
+  let booking = await Booking.findByPk(bookingId);
+
+  if (!booking) {
+      const err = {};
+      err.title = "Couldn't find a booking with the specific id"
+      err.status = 404;
+      err.message = "Booking couldn't be found";
+      return next(err)
+  }
+  return next();
+};
 
 
 module.exports = {
   spotExists,
   usersSpot,
   usersReview,
-  reviewExists
+  reviewExists,
+  bookingExists,
+  convertDate
 }
