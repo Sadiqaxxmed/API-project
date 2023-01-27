@@ -237,6 +237,82 @@ router.get('/current', requireAuth, async (req, res, next) => {
   })
 });
 
+//Get spot by spotid
+
+router.get('/:spotId', spotExists, async (req, res, next) => {
+  let { spotId } = req.params;
+  let spot;
+
+  try {
+    spot = await Spot.findByPk(spotId);
+    spot = spot.toJSON();
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+}
+
+  let count;
+    try {
+      count = await Review.count({
+          where: {
+          spotId: spotId
+      }
+    })
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+  }
+  spot.numReviews = count;
+
+  let sum;
+    try {
+      sum = await Review.sum('stars', {
+        where: {
+            spotId: spotId
+        }
+    })
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+
+  if (sum / count) {
+    spot.avgStarRating = sum / count;
+  } else {
+    spot.avgStarRating = "No current ratings";
+  }
+
+  let spotImages;
+  try {
+    spotImages = await SpotImage.findAll({
+        where: {
+            spotId: spotId
+        },
+        attributes: ['id', 'url', 'preview']
+    });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+
+  if (spotImages.length > 0) {
+    spot.SpotImages = spotImages;
+  } else {
+    spot.SpotImages = "No images listed"
+}
+
+  let owner;
+  try {
+    owner = await User.findByPk(spot.ownerId, {
+        attributes: ['id', 'firstName', 'lastName']
+    });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+
+  spot.Owner = owner;
+
+  return res.json(spot);
+
+});
+
+
 //Create a spot
 router.post('/', requireAuth, validateSpot, async (req, res, next) => {
   let user = req.user;
