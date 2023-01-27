@@ -5,11 +5,10 @@ const { User, Spot, Review, SpotImage, ReviewImage, Booking } = require('../../d
 const { check } = require('express-validator');
 const { handleValidationErrors, validateBooking } = require('../../utils/validation');
 const sequelize = require('sequelize');
-const { bookingExists } = require('../../utils/error-handles')
+const { bookingExists, convertDate } = require('../../utils/error-handles')
 
 
 //Get bookings for curr user
-
 router.get("/current", requireAuth, async (req, res, next) => {
   const user = req.user;
 
@@ -62,7 +61,93 @@ router.get("/current", requireAuth, async (req, res, next) => {
   });
 });
 
+//Edit booking
+router.put('/:bookingId', requireAuth, bookingExists, validateBooking, async (req, res) => {
+  const { bookingId } = req.params;
+  const user = req.user;
+  let { startDate, endDate } = req.body;
+  startDate = convertDate(startDate);
+  endDate = convertDate(endDate);
 
+  let bookingEdit = await Booking.findByPk(bookingId);
+
+  if (startDate <= new Date()) {
+      return res.status(403).json({
+          title: "Can't start a booking in the past",
+          message: "Start date cannot be before today"
+      })
+  }
+
+  bookingsStart = convertDate(bookingEdit.startDate);
+  bookingsEnd = convertDate(bookingEdit.endDate);
+  const spotId = bookingEdit.spotId;
+
+  if (bookingsEnd < new Date()) {
+      return res.status(403).json({
+          title: "Can't edit a booking that's past the end date",
+          message: "Past bookings can't be modified"
+      });
+  };
+
+  if (endDate <= startDate) {
+      return res.status(400).json({
+          title: "Validation error",
+          message: "endDate cannot be on or before startDate"
+      });
+  };
+
+  if (user.id !== bookingEdit.userId) {
+      return res.status(403).json({
+          title: "Authorization error",
+          message: "Booking doesn't belong to current user"
+      });
+  }
+
+  const spot = await Spot.findByPk(spotId);
+
+  const bookings = await spot.getBookings();
+
+  for (const booking of bookings) {
+      if (booking.id !== bookingEdit.id) {
+
+          bookStart = convertDate(booking.startDate);
+          bookEnd = convertDate(booking.endDate);
+
+          if ((bookStart <= startDate) && bookEnd >= startDate) {
+              return res.status(403).json({
+                  title: "Booking Conflict",
+                  errors: [
+                      { startDate: "Start date conflicts with an existing booking" }
+                  ]
+              });
+          } else if (((bookStart <= endDate) && (endDate <= bookEnd))) {
+              return res.status(403).json({
+                  title: "Booking Conflict",
+                  errors: [
+                      { endDate: "End date conflicts with an existing booking" }
+                  ]
+              });
+          } else if ((bookStart >= startDate) && (bookEnd <= endDate)) {
+              return res.status(403).json({
+                  title: "Booking Conflict",
+                  errors: [
+                      { startDate: "Start date conflicts with an existing booking" },
+                      { endDate: "End date conflicts with an existing booking" }
+                  ]
+              });
+          }
+      }
+  }
+
+  bookingEdit.startDate = startDate;
+  bookingEdit.endDate = endDate;
+  bookingEdit.save();
+  res.json(bookingEdit)
+})
+
+
+
+//Delete booking
 router.delete('/:bookingId', restoreUser, requireAuth, async (req, res, next) => {
 
   const { user } = req
