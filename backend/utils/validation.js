@@ -116,6 +116,18 @@ const validateQuery = [
 ];
 
 
+const validateBooking = [
+    check('startDate')
+        .notEmpty()
+        .isDate()
+        .withMessage('Start date must be a date'),
+    check('endDate')
+        .notEmpty()
+        .isDate()
+        .withMessage('End date must be a date and cannot be on or before start date'),
+    handleValidationErrors
+];
+
 module.exports = {
   handleValidationErrors,
   validateSpot,
@@ -123,4 +135,5 @@ module.exports = {
   validateReview,
   validateReviewImage,
   validateQuery,
+  validateBooking
 };
