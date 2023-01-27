@@ -476,6 +476,59 @@ router.delete('/:spotId', requireAuth, spotExists, usersSpot, async (req, res, n
   })
 })
 
+//Get all bookings for a Spot by Spotid
+router.get('/:spotId/bookings', requireAuth, spotExists, async (req, res, next) => {
+  const { spotId } = req.params;
+  const user = req.user;
+
+  const spot = await Spot.findByPk(spotId);
+
+  let bookings = await spot.getBookings({
+      include: {
+          model: User,
+          attributes: ["id", "firstName", "lastName"]
+      }
+  });
+
+  if (!bookings.length > 0) {
+      return res.json({
+          message: "No bookings for current spot"
+      })
+  }
+
+  const bookingsArr = [];
+  bookings.forEach(booking => {
+      booking = booking.toJSON();
+      let eachBooking = createBookingObject(booking, user, spot);
+      bookingsArr.push(eachBooking);
+  });
+
+  res.json({
+      Bookings: bookingsArr
+  });
+});
+
+function createBookingObject(booking, user, spot) {
+  if (user.id !== spot.ownerId) {
+      return {
+          spotId: booking.spotId,
+          startDate: booking.startDate,
+          endDate: booking.endDate
+      };
+  } else {
+      return {
+          User: booking.User,
+          spotId: booking.spotId,
+          userId: booking.userId,
+          startDate: booking.startDate,
+          endDate: booking.endDate,
+          createdAt: booking.createdAt,
+          updatedAt: booking.updatedAt
+      };
+  }
+}
+
+
 //Create booking for a spot by spotId
 
 router.post('/:spotId/bookings', requireAuth, spotExists, validateBooking, async (req, res, next) => {
@@ -484,7 +537,7 @@ router.post('/:spotId/bookings', requireAuth, spotExists, validateBooking, async
   let { startDate, endDate } = req.body;
   startDate = new Date(startDate);
   endDate = new Date(endDate);
-  
+
   // Check if start date is in the past
   if (startDate <= new Date()) {
       return next({
