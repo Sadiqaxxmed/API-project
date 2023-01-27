@@ -115,11 +115,12 @@ const validateQuery = [
   handleValidationErrors
 ];
 
+
 module.exports = {
   handleValidationErrors,
   validateSpot,
   validateSpotImage,
   validateReview,
   validateReviewImage,
-  validateQuery
+  validateQuery,
 };

@@ -4,7 +4,7 @@ const router = express.Router();
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User, Spot, Review, SpotImage, ReviewImage, Booking } = require('../../db/models');
 
-const { validateSpot, validateSpotImage, validateQuery } = require('../../utils/validation');
+const { validateSpot, validateSpotImage, validateQuery, validateReview } = require('../../utils/validation');
 
 const { spotExists, usersSpot, convertDate } = require('../../utils/error-handles')
 
@@ -349,6 +349,48 @@ router.get('/:spotId/reviews', spotExists, async (req, res, next) => {
   res.json({
     reviews: reviewsArr
   });
+});
+
+//Create review for a spot by spotId
+router.post('/:spotId/reviews', requireAuth, spotExists, validateReview, async (req, res, next) => {
+  const { spotId } = req.params;
+  const { review, stars } = req.body
+
+  const user = req.user;
+  const spot = await Spot.findByPk(spotId);
+
+  let existingReview = await Review.findOne({
+      where: {
+          spotId: spotId,
+          userId: user.id
+      }
+  });
+
+  if (existingReview) {
+      return res.status(403).json({
+          error: {
+              title: "Review from the current user already exists for the Spot",
+              message: "User already has a review for this spot"
+          }
+      });
+  }
+
+  if (spot.ownerId === user.id) {
+      return res.status(403).json({
+          error: {
+              title: "User cannot leave review for own spot",
+              message: "This spot is owned by the current user"
+          }
+      });
+  }
+
+  const newReview = await spot.createReview({
+      userId: user.id,
+      review: review,
+      stars: stars
+  });
+
+  res.status(201).json(newReview);
 });
 
 //Create a spot
