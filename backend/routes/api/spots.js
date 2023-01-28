@@ -153,13 +153,6 @@ router.get('/', validateQuery, async (req, res, next) => {
         size: size
   });
 }
-
-  // try {
-  //     const spots = await Spot.findAll();
-  //     return res.json({ spots });
-  // } catch (error) {
-  //     return next(error);
-  // }
 });
 
 
@@ -535,8 +528,8 @@ router.post('/:spotId/bookings', requireAuth, spotExists, validateBooking, async
   const { spotId } = req.params;
   const user = req.user;
   let { startDate, endDate } = req.body;
-  startDate = new Date(startDate);
-  endDate = new Date(endDate);
+  startDate = convertDate(startDate);
+  endDate = convertDate(endDate);
 
   // Check if start date is in the past
   if (startDate <= new Date()) {
