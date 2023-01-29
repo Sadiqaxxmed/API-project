@@ -77,7 +77,14 @@ const user = await User.signup({ email, username, password, firstName, lastName 
 // Generate token and set cookie
 let token = await setTokenCookie(res, user);
 
-return res.json({ user });
+return res.json({ 'user': {
+
+  firstName: user.firstName,
+  lastName: user.lastName,
+  email: user.email,
+  username: user.username,
+  
+} });
 
 },
 );
