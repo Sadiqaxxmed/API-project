@@ -9,31 +9,25 @@ const { validateSpot, validateSpotImage, validateQuery, validateReview, validate
 const { spotExists, usersSpot, convertDate } = require('../../utils/error-handles')
 
 
-
 //Get all spots
 router.get('/', validateQuery, async (req, res, next) => {
 
-  const { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+  let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
 
-  let pagination = {};
 
-  const defaultPage = 1;
-  const defaultSize = 20;
-  const maxPage = 10;
-  const maxSize = 20;
+  page = Number(page)
+  size = Number(size);
 
-  pagination.page = Number(page) || defaultPage;
-  pagination.size = Number(size) || defaultSize;
+  if (!page) page = 1
+  if (!size) size = 20
+  if (page > 10) page = 10;
+  if (size > 20) size = 20;
 
-  if (pagination.page > maxPage) {
-    pagination.page = maxPage;
+  let pagination = {}
+  if (parseInt(page) >= 1 && parseInt(size) >= 1) {
+      pagination.limit = size
+      pagination.offset = size * (page - 1)
   }
-
-  if (pagination.size > maxSize) {
-    pagination.size = maxSize;
-  }
-
-  pagination.offset = pagination.size * (pagination.page - 1);
 
   const query = {
     where: {},
