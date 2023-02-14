@@ -4,21 +4,49 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 
-function Navigation({ isLoaded }){
-  const sessionUser = useSelector(state => state.session.user);
+import OpenModalMenuItem from './OpenModalMenuItem';
+import SignupFormModal from '../SignupFormModal';
 
-  return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-      </li>
-      {isLoaded && (
-        <li>
-          <ProfileButton user={sessionUser} />
-        </li>
-      )}
-    </ul>
-  );
+
+function Navigation({ isLoaded }) {
+
+    const sessionUser = useSelector(state => state.session.user);
+
+    return (
+        <div className='nav'>
+            <div className='nav-inner'>
+                <div className='left-nav'>
+                    <NavLink exact to="/" className="logo">OFFSZN</NavLink>
+                </div>
+                {isLoaded && (
+                    <div className='right-nav'>
+                        {sessionUser ? (
+                            <span className='create-spot'>
+                                <div>
+                                    <OpenModalMenuItem
+                                        itemText="Create your spot"
+                                    />
+                                </div>
+                            </span>
+                        ) : (
+                            <span className='create-spot'>
+                                <div>
+                                    <OpenModalMenuItem
+                                        itemText="Create your spot"
+                                        modalComponent={<SignupFormModal/>}
+                                    />
+                                </div>
+                            </span>
+                        )}
+                        <div className='profile-button'>
+                            <ProfileButton user={sessionUser}/>
+                        </div>
+                  </div>
+                )}
+            </div>
+        </div >
+    );
 }
+
 
 export default Navigation;
