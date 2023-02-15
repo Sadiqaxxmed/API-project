@@ -6,6 +6,8 @@ import './Navigation.css';
 
 import OpenModalMenuItem from './OpenModalMenuItem';
 import SignupFormModal from '../SignupFormModal';
+import CreateSpotForm from '../Spots/CreateSpot';
+
 
 
 function Navigation({ isLoaded }) {
@@ -25,6 +27,7 @@ function Navigation({ isLoaded }) {
                                 <div>
                                     <OpenModalMenuItem
                                         itemText="Create your spot"
+                                        modalComponent={<CreateSpotForm />}
                                     />
                                 </div>
                             </span>

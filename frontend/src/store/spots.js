@@ -3,6 +3,10 @@ import { csrfFetch } from "./csrf";
 const SINGLE_SPOT = 'spots/SINGLE_SPOT'
 const USERS_SPOTS = 'spots/USERS_SPOTS';
 const ALL_SPOTS = 'spots/ALL_SPOTS';
+const ADD_SPOT = 'spots/ADD_SPOT';
+const ADD_PREIMG = "spots/ADD_PREIMG";
+
+
 
 //--------------------------------------------------------------------- ACTIONS
 
@@ -24,6 +28,22 @@ export const allSpots = (spots) => {
   return {
       type: ALL_SPOTS,
       spots
+  }
+}
+
+export const addSpot = (spot) => {
+  return {
+      type: ADD_SPOT,
+      spot
+  }
+}
+
+export const addPreImg = (spotId, url, preview) => {
+  return {
+      type: ADD_PREIMG,
+      spotId,
+      url,
+      preview
   }
 }
 
@@ -58,12 +78,49 @@ export const getAllSpots = () => async (dispatch) => {
   }
 }
 
+export const addSpots = (spot) => async (dispatch) => {
+  const res = await csrfFetch("/api/spots", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify(spot)
+  })
+
+  if (res.ok) {
+      const spot = await res.json();
+      dispatch(addSpot(spot));
+      return spot;
+  }
+}
+
+export const addPreviewImg = (spotId, url, preview) => async (dispatch) => {
+  const res = await csrfFetch(`/api/spots/${spotId}/images`, {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+          url,
+          preview
+      })
+  })
+
+  if (res.ok) {
+      const { spotId, url, preview } = await (res.json());
+      dispatch(addPreImg(+spotId, url, preview))
+      return spotId
+  }
+}
+
+
+//--------------------------------------------------------------------- REDUCER
+
 
 const initialState = {
   spots: {},
   singleSpot: {}
 }
-
 
 const normalize = (spots) => {
   const data = {};
@@ -73,7 +130,6 @@ const normalize = (spots) => {
   }
 }
 
-//--------------------------------------------------------------------- REDUCER
 
 export default function spotReducer(state = initialState, action) {
 
@@ -93,6 +149,16 @@ export default function spotReducer(state = initialState, action) {
           newState.singleSpot = action.spot
           return newState
       }
+      case ADD_SPOT: {
+        const newState = { ...state }
+        newState.spots = { ...state.spots, [action.spot.id]: action.spot }
+        return newState
+      }
+      case ADD_PREIMG: {
+        const newState = { ...initialState }
+        newState.spots = { ...state.spots, [action.spotId.previewImage]: action.url }
+        return newState
+    }
       default:
         return state;
   }
