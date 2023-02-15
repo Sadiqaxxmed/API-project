@@ -6,6 +6,8 @@ import Navigation from "./components/Navigation";
 
 
 import AllSpots from "./components/Spots/AllSpots";
+import Spot from "./components/Spots/Spot";
+
 
 import "./index.css"
 
@@ -22,9 +24,12 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-        <Route exact path="/">
+          <Route exact path="/">
             <AllSpots />
-        </Route>
+          </Route>
+          <Route exact path="/spots/:spotId">
+            <Spot />
+          </Route>
         </Switch>
       )}
     </>
