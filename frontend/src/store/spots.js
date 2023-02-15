@@ -5,6 +5,7 @@ const USERS_SPOTS = 'spots/USERS_SPOTS';
 const ALL_SPOTS = 'spots/ALL_SPOTS';
 const ADD_SPOT = 'spots/ADD_SPOT';
 const ADD_PREIMG = "spots/ADD_PREIMG";
+const EDIT_SPOT = 'spots/EDIT_SPOT'
 
 
 
@@ -44,6 +45,14 @@ export const addPreImg = (spotId, url, preview) => {
       spotId,
       url,
       preview
+  }
+}
+
+export const editSpot = (spotId, spot) => {
+  return {
+      type: EDIT_SPOT,
+      spotId,
+      spot
   }
 }
 
@@ -113,6 +122,21 @@ export const addPreviewImg = (spotId, url, preview) => async (dispatch) => {
   }
 }
 
+export const editSpots = (spotId, spot) => async (dispatch) => {
+  const res = await csrfFetch(`/api/spots/${spotId}`, {
+      method: "PUT",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify(spot)
+  })
+
+  if (res.ok) {
+      const spot = await res.json();
+      dispatch(editSpot(spotId, spot));
+      return spot;
+  }
+}
 
 //--------------------------------------------------------------------- REDUCER
 
@@ -158,7 +182,13 @@ export default function spotReducer(state = initialState, action) {
         const newState = { ...initialState }
         newState.spots = { ...state.spots, [action.spotId.previewImage]: action.url }
         return newState
-    }
+      }
+      case EDIT_SPOT: {
+        const newState = { ...state }
+        newState.spots = { ...state.spots, [action.spotId]: action.spot }
+        newState.singleSpot = { ...state.singleSpot, ...action.spot }
+        return newState
+      }
       default:
         return state;
   }
