@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSingleSpot } from "../../../store/spots";
 
+import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
+import EditSpotForm from "../EditSpot";
 
 
 import "./Spot.css"
@@ -12,6 +14,12 @@ export default function Spot() {
     const dispatch = useDispatch();
 
     const spot = useSelector(state => state.spots.singleSpot)
+    const user = useSelector(state => state.session.user)
+
+    let owner;
+    if (user && spot) {
+        spot.ownerId === +user.id ? owner = true : owner = false
+    }
 
     useEffect(() => {
         dispatch(getSingleSpot(spotId))
@@ -22,6 +30,7 @@ export default function Spot() {
     if (Object.values(spot).length === 0) return null
 
     if (spot === undefined) return null;
+    if (user === undefined) return null;
 
 
     const images = [
@@ -52,6 +61,17 @@ export default function Spot() {
                 <div className="header-left">
                     <p className="header-left" id="location">{spot.city}, {spot.state}, {spot.country}</p>
                 </div>
+                {owner && (
+                    <div className="header-right">
+                        <div className="edit-form">
+                            <i className="fa-solid fa-pen-to-square"></i>
+                            <OpenModalMenuItem
+                                itemText="Edit"
+                                modalComponent={<EditSpotForm spot={spot} />}
+                            />
+                        </div>
+                    </div>
+                )}
             </div>
             <div className="img-section">
                 <img className="main-picture" src={images[0]} />
