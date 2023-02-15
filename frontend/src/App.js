@@ -7,6 +7,8 @@ import Navigation from "./components/Navigation";
 
 import AllSpots from "./components/Spots/AllSpots";
 import Spot from "./components/Spots/Spot";
+import UserSpots from "./components/Spots/UserSpots";
+
 
 
 import "./index.css"
@@ -26,6 +28,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <AllSpots />
+          </Route>
+          <Route exact path="/my-spots">
+            <UserSpots />
           </Route>
           <Route exact path="/spots/:spotId">
             <Spot />
