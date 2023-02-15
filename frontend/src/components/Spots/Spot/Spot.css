@@ -1,0 +1,123 @@
+.spot-div {
+    max-width: 100%;
+    padding: 0px 40px;
+    padding-top: 15px;
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    font-family: Roboto, Helvetica, sans-serif;
+}
+
+
+.spot-name {
+    font-size: 26px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    font-family: Roboto, Helvetica, sans-serif;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    justify-content: space-between;
+    font-family: Roboto, Helvetica, sans-serif;
+}
+
+.header-left {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 6px;
+    width: fit-content;
+}
+
+.header-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 200px;
+    box-sizing: border-box;
+    height: auto;
+}
+
+.img-section {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 350px;
+}
+
+.main-picture {
+    height: 100%;
+    width: 50%;
+    padding-right: 3px;
+}
+
+
+.side-picture {
+    height: 50%;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+
+.owner-detail {
+    font-family: 'Roboto', 'Helvetica Neue', 'sans-serif';
+    margin-bottom: 0;
+}
+
+.detail {
+    margin-top: 8px;
+    font-size: 17px;
+}
+
+.spot-detail {
+    border-bottom: 1px solid rgba(165, 165, 165, 0.4);
+}
+
+.spot-description {
+    font-family: 'Roboto', 'Helvetica Neue', 'sans-serif';
+    font-size: 20px;
+}
+
+#location {
+    text-decoration: underline;
+}
+
+#pic-1 {
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+}
+
+#pic-2 {
+    padding-bottom: 2px;
+    padding-left: 3px;
+    padding-bottom: 3px;
+}
+
+#pic-3 {
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+}
+
+#pic-4 {
+    padding-left: 3px;
+    padding-bottom: 3px;
+}
+
+@media (max-width: 734px) {
+    .big-picture {
+        width: 100%;
+    }
+
+    .small-picture {
+        display: none;
+    }
+}
