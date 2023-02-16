@@ -69,10 +69,9 @@ function ProfileButton({ user }) {
             <div className={ulClassName} ref={ulRef}>
                 {user ? (
                     <div className="user-actions">
-                        <p>{user.username}</p>
-                        <p>{user.firstName} {user.lastName}</p>
+                        <p>Hello, {user.username}</p>
                         <p id="user-email">{user.email}</p>
-                        <button onClick={mySpots} className='offsznbnb-button' id="spots-button">My Spots</button>
+                        <button onClick={mySpots} className='offsznbnb-button' id="spots-button">Manage Spots</button>
                         <button onClick={logout} className='offsznbnb-button' id='logout-button'>Log Out</button>
                     </div>
                 ) : (

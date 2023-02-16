@@ -3,6 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getUsersSpots } from "../../../store/spots";
 
+
+import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
+import EditSpotForm from "../EditSpot";
+import DeleteSpotsForm from "../DeleteSpots";
+import CreateSpotForm from '../CreateSpot';
+
+
 import "./UserSpots.css"
 
 
@@ -45,12 +52,31 @@ export default function UserSpots() {
     if (!spots.length) return null
 
 
+    const rating = (rating) => {
+
+        if (typeof rating === "number") {
+            return rating;
+        } else {
+            return "New";
+        }
+    }
+
     const onClick = (spotId) => {
         history.push(`/spots/${spotId}`)
     }
 
     return (
+        <>
+        <div className="header-Manage-Spots">Manage Your Spots</div>
+        <div className='Manage-create-spot'>
+        <i className="fa-solid fa-pen-to-square"></i>
+                <OpenModalMenuItem
+                itemText="Create your spot"
+                modalComponent={<CreateSpotForm />}
+                />
+        </div>
         <div className="allSpots-container">
+
             {spots && (
                 spots.map((spot) => (
                     < div key={spot.id} className="spot"
@@ -64,19 +90,48 @@ export default function UserSpots() {
                         <div className="spot-bottom-section">
                             <div className="spot-header">
                                 <p className="spotLocal">{spot.city}, {spot.state}</p>
-                            </div>
-                            <div className="spot-middle-section">
-                                <p className="spot-name">{spot.name}</p>
+                                {typeof spot.avgRating === "number" ? (
+                                    <p className="spot-rating">
+                                    <i className="fa-solid fa-star" id="star"></i>{ rating(spot.avgRating).toFixed(1) }</p>
+                                ) : (
+                                    <p className="spot-rating">
+                                    <i className="fa-solid fa-star" id="star"></i>New</p>
+                                )}
                             </div>
                             <div className="spot-footer">
+
+                                <div className="footer-left-Secion">
+
                                 <p className="price">${spot.price}</p>
                                 <p className="price-perNight">night</p>
+
+
+
+                                <div className="edit-option">
+                                <i className="fa-solid fa-pen-to-square"></i>
+                                <OpenModalMenuItem
+                                itemText="Update"
+                                modalComponent={<EditSpotForm spot={spot} />}
+                                />
+                                </div>
+
+                                <div className="delete-option">
+                                <i className="fa-solid fa-square-minus"></i>
+                                <OpenModalMenuItem
+                                itemText="Delete"
+                                modalComponent={<DeleteSpotsForm spot={spot} />}
+                                />
+                                </div>
+
+                                </div>
+
+
                             </div>
                         </div>
                     </div>
                 ))
             )}
         </div >
-
+        </>
     )
 }
