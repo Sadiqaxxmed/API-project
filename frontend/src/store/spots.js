@@ -1,11 +1,12 @@
 import { csrfFetch } from "./csrf";
 
-const SINGLE_SPOT = 'spots/SINGLE_SPOT'
+const SINGLE_SPOT = 'spots/SINGLE_SPOT';
 const USERS_SPOTS = 'spots/USERS_SPOTS';
 const ALL_SPOTS = 'spots/ALL_SPOTS';
 const ADD_SPOT = 'spots/ADD_SPOT';
 const ADD_PREIMG = "spots/ADD_PREIMG";
-const EDIT_SPOT = 'spots/EDIT_SPOT'
+const EDIT_SPOT = 'spots/EDIT_SPOT';
+const DELETE_SPOT = 'spots/DELETE_SPOT';
 
 
 
@@ -53,6 +54,13 @@ export const editSpot = (spotId, spot) => {
       type: EDIT_SPOT,
       spotId,
       spot
+  }
+}
+
+export const deleteSpot = (spotId) => {
+  return {
+      type: DELETE_SPOT,
+      spotId
   }
 }
 
@@ -138,6 +146,18 @@ export const editSpots = (spotId, spot) => async (dispatch) => {
   }
 }
 
+export const deleteSpots = (spotId) => async (dispatch) => {
+  const res = await csrfFetch(`/api/spots/${spotId}`, {
+      method: 'DELETE'
+  })
+
+  if (res.ok) {
+      const spot = await (res.json());
+      dispatch(deleteSpot(+spot.id))
+      return spot
+  }
+}
+
 //--------------------------------------------------------------------- REDUCER
 
 
@@ -187,6 +207,11 @@ export default function spotReducer(state = initialState, action) {
         const newState = { ...state }
         newState.spots = { ...state.spots, [action.spotId]: action.spot }
         newState.singleSpot = { ...state.singleSpot, ...action.spot }
+        return newState
+      }
+      case DELETE_SPOT: {
+        const newState = { ...state }
+        delete newState.spots[action.spotId]
         return newState
       }
       default:

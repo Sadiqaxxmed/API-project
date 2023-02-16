@@ -5,6 +5,8 @@ import { getSingleSpot } from "../../../store/spots";
 
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 import EditSpotForm from "../EditSpot";
+import DeleteSpotsForm from "../DeleteSpots";
+
 
 
 import "./Spot.css"
@@ -62,15 +64,24 @@ export default function Spot() {
                     <p className="header-left" id="location">{spot.city}, {spot.state}, {spot.country}</p>
                 </div>
                 {owner && (
+
                     <div className="header-right">
-                        <div className="edit-form">
+                        <div className="edit-option">
                             <i className="fa-solid fa-pen-to-square"></i>
                             <OpenModalMenuItem
                                 itemText="Edit"
                                 modalComponent={<EditSpotForm spot={spot} />}
                             />
                         </div>
+                        <div className="delete-option">
+                            <i className="fa-solid fa-square-minus"></i>
+                            <OpenModalMenuItem
+                                itemText="Delete"
+                                modalComponent={<DeleteSpotsForm spot={spot} />}
+                            />
+                        </div>
                     </div>
+
                 )}
             </div>
             <div className="img-section">
