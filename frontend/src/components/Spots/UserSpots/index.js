@@ -69,7 +69,6 @@ export default function UserSpots() {
         <>
         <div className="header-Manage-Spots">Manage Your Spots</div>
         <div className='Manage-create-spot'>
-        <i className="fa-solid fa-pen-to-square"></i>
                 <OpenModalMenuItem
                 itemText="Create your spot"
                 modalComponent={<CreateSpotForm />}
@@ -108,7 +107,6 @@ export default function UserSpots() {
 
 
                                 <div className="edit-option">
-                                <i className="fa-solid fa-pen-to-square"></i>
                                 <OpenModalMenuItem
                                 itemText="Update"
                                 modalComponent={<EditSpotForm spot={spot} />}
@@ -116,7 +114,6 @@ export default function UserSpots() {
                                 </div>
 
                                 <div className="delete-option">
-                                <i className="fa-solid fa-square-minus"></i>
                                 <OpenModalMenuItem
                                 itemText="Delete"
                                 modalComponent={<DeleteSpotsForm spot={spot} />}

@@ -58,7 +58,6 @@
   box-sizing: border-box;
   text-align: center;
   cursor: pointer;
-  text-decoration: underline;
   list-style: none;
   width: 15%;
   height: 30px;
@@ -67,43 +66,66 @@
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  padding-top: 10px;
-  padding-left: 10px;
+  background-color: #e31c5f;
+  width: 10%;
+  border: none;
+  border-radius: 5px;
+  height: 30px;
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  margin-left: 48px;
 }
 
 .edit-option {
-  box-sizing: border-box;
-  text-align: center;
-  cursor: pointer;
-  text-decoration: underline;
-  list-style: none;
-  width: 15%;
-  height: 30px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+  text-align: center;
+  cursor: pointer;
+  list-style: none;
+  height: 35px;
+  width: 20%;
   border-radius: 8px;
-  padding-top: 20px;
-  padding-left: 130px;
+  margin-top: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-left: 100px;
+  background-color: #e31c5f;
+  border: none;
+  border-radius: 5px;
+  height: 20px;
+  color: #ffffff;
+  font-weight: bold;
 }
 
 
 
 .delete-option {
-  box-sizing: border-box;
-  text-align: center;
-  cursor: pointer;
-  text-decoration: underline;
-  list-style: none;
-  height: 30px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+  text-align: center;
+  cursor: pointer;
+  list-style: none;
+  height: 30px;
+  width: 20%;
   border-radius: 8px;
-  padding-top: 20px;
-  padding-left: 50px;
+  margin-top: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-left: 10px;
+  background-color: #e31c5f;
+  border: none;
+  border-radius: 5px;
+  height: 20px;
+  color: #ffffff;
+  font-weight: bold;
 }
 
 .price {
@@ -121,6 +143,9 @@
       width: 33%;
   }
 
+  .Manage-create-spot{
+      width: 10%;
+  }
   .spotImg {
       height: 350px;
   }
@@ -131,14 +156,22 @@
       width: 50%;
   }
 
-  .spotImg {
+    .Manage-create-spot{
+      width: 25%;
+    }
+
+    .spotImg {
       height: 350px;
-  }
+    }
 }
 
 @media (max-width: 550px) {
   .spot {
       width: 100%;
+  }
+
+  .Manage-create-spot{
+    width: 25%;
   }
 
   .spotImg {
