@@ -51,7 +51,7 @@ export default function AllSpots() {
         <div className="allSpots-container">
             {spots && (
                 spots.map((spot) => (
-                    
+
                     <div key={spot.id} className="spot"
                         onClick={() => onClick(spot.id)} >
                         <div className="spotImg">
@@ -64,7 +64,7 @@ export default function AllSpots() {
 
                         <div className="spot-bottom-container">
                             <div className="spot-header-container">
-                                <p className="spot-local">{spot.city}, {spot.state}</p>
+                                <p>{spot.city}, {spot.state}</p>
                                 {typeof spot.avgRating === "number" ? (
                                     <p className="spot-rating">
                                     <i className="fa-solid fa-star" id="star"></i>{ rating(spot.avgRating).toFixed(1) }</p>
@@ -74,9 +74,7 @@ export default function AllSpots() {
                                 )}
                             </div>
 
-                            <div className="spot-middle-container">
-                                <p className="spot-name">{spot.name}</p>
-                            </div>
+
 
                             <div className="spot-footer-container">
                                 <p className="spot-price">${spot.price}</p>
