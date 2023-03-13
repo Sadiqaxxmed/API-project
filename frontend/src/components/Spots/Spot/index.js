@@ -46,18 +46,20 @@ export default function Spot() {
         }
     }
 
-    function randomNum(min, max) {
-        return Math.floor(Math.random() * (max - min) + min);
-    }
 
     return spot && (
+ 
+
         <div className="spot-div">
+
             <h1 className="spot-name">{spot.name}</h1>
+
             <div className="header">
                 <div className="header-left">
                     <p className="header-left" id="location">{spot.city}, {spot.state}, {spot.country}</p>
                 </div>
             </div>
+
             <div className="img-section">
                 <img className="main-picture" src={images[0]} />
                 <div className="side-pictures">
@@ -67,11 +69,32 @@ export default function Spot() {
                     <img className="side-picture" id="pic-4" src={images[4]} />
                 </div>
             </div>
+
+
+
+
+          <div className="spot-detail-section">
+
             <div className="spot-detail">
-                <h2 className="owner-detail"> Hosted by {spot.Owner.firstName}</h2>
-                <p className="detail">{randomNum(2, 9)} guests | {randomNum(2, 9)} bedrooms | {randomNum(2, 9)} beds | {randomNum(2, 9)} baths</p>
+                <h2 className="owner-detail"> Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h2>
                 <p className="spot-description">{spot.description}</p>
             </div>
+
+
+            <div className="reserve-card">
+                <div className="reserve-top">
+                <p className="Spot-price">${spot.price} night</p>
+
+
+                </div>
+                <div className="reserve-bottom">
+                <button type="submit" className='login-button' id='log-button'>Reserve</button>
+                </div>
             </div>
+
+          </div>
+
+        </div>
+
     )
 }
