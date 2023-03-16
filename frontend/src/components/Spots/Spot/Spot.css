@@ -96,6 +96,7 @@
 }
 
 .reserve-card {
+
     border: solid black;
     border-radius: 5px;
     padding: 10px 20px 10px;
@@ -104,6 +105,52 @@
     min-height: 130px;
 }
 
+.reserve-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.reserve-top-left {
+    display: flex;
+    width: 30%;
+    justify-content: left;
+}
+
+.reserve-top-right {
+    display: flex;
+    width: 70%;
+    justify-content: right;
+}
+
+.Spot-price{
+    font-weight: bold;
+    font-size: 18px;
+}
+.reserve-ratings {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 6px;
+    width: fit-content;
+    font-size: 20px;
+
+}
+
+.reserve-reviews {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 6px;
+    width: fit-content;
+    font-size: 20px;
+}
+
+#star-reserve {
+    align-self: center;
+    font-size: 70%;
+    padding-bottom: 3px;
+    padding-right: 5px;
+}
 
 #pic-1 {
     padding-left: 3px;
@@ -126,6 +173,56 @@
 #pic-4 {
     padding-left: 3px;
     padding-bottom: 3px;
+}
+
+.review-user-name {
+    font-size: 15px;
+}
+
+.review-date {
+    font-size: 12px;
+    color: gray
+}
+
+.review-spots-text {
+    font-family: 'Circular', 'BlinkMacSystemFont', 'Roboto', 'Helvetica Neue', sans-serif;
+    font-size: 18x;
+}
+
+.spot-reviews-header-left {
+    display: flex;
+    width: fit-content;
+    justify-content: left;
+}
+
+
+.delete-review  {
+    background-color: darkcyan;
+    width: 5%;
+    border: none;
+    border-radius: 5px;
+    height: 20px;
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .post-review  {
+    background-color: darkcyan;
+    width: 12%;
+    border: none;
+    border-radius: 5px;
+    height: 20px;
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  #star-detail {
+    align-self: center;
+    font-size: 65%;
+    padding-bottom: 4px;
+    padding-right: 5px;
 }
 
 @media (max-width: 734px) {
