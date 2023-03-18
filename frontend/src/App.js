@@ -12,6 +12,7 @@ import UserSpots from "./components/Spots/UserSpots";
 
 
 import "./index.css"
+import CreateSpotForm from "./components/Spots/CreateSpot";
 
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <AllSpots />
+          </Route>
+          <Route exact path="/spots/new" >
+            <CreateSpotForm />
           </Route>
           <Route exact path="/my-spots">
             <UserSpots />
