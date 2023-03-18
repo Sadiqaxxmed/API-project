@@ -6,7 +6,7 @@ import './Navigation.css';
 
 import OpenModalMenuItem from './OpenModalMenuItem';
 import SignupFormModal from '../SignupFormModal';
-import CreateSpotForm from '../Spots/CreateSpot';
+// import CreateSpotForm from '../Spots/CreateSpot';
 
 
 
@@ -23,14 +23,11 @@ function Navigation({ isLoaded }) {
                 {isLoaded && (
                     <div className='right-nav'>
                         {sessionUser ? (
-                            <span className='create-spot'>
-                                <div>
-                                    <OpenModalMenuItem
-                                        itemText="Create your spot"
-                                        modalComponent={<CreateSpotForm />}
-                                    />
-                                </div>
-                            </span>
+                           <span className='create-spot'>
+                           <NavLink exact to="/spots/new" className="create-new-spot nav-text">
+                            Create a New Spot
+                          </NavLink>
+                       </span>
                         ) : (
                             <span className='create-spot'>
                                 <div>
