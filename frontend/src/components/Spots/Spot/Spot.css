@@ -198,24 +198,27 @@
 
 .delete-review  {
     background-color: darkcyan;
-    width: 5%;
+    width: 8%;
     border: none;
     border-radius: 5px;
-    height: 20px;
+    height: 30px;
     color: #ffffff;
     font-weight: bold;
-    margin-bottom: 20px;
-  }
+    list-style: none;
+    cursor: pointer;
+}
 
   .post-review  {
     background-color: darkcyan;
     width: 12%;
     border: none;
     border-radius: 5px;
-    height: 20px;
+    height: 30px;
     color: #ffffff;
     font-weight: bold;
-    margin-bottom: 5px;
+    list-style: none;
+    cursor: pointer;
+
   }
 
   #star-detail {
