@@ -5,6 +5,8 @@ import { getSingleSpot } from "../../../store/spots";
 import { getSpotReviews } from "../../../store/reviews";
 
 import CreateReviewModal from "../../Reviews/CreateReviewModal";
+import DeleteReviewForm from "../../Reviews/DeleteReview";
+
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 
 
@@ -163,6 +165,7 @@ export default function Spot() {
                             modalComponent={<CreateReviewModal spot={spot} />}
                         />
                         </button>
+
                         <p>Be the first to post a review!</p>
                     </div>
                 ) : (
@@ -177,8 +180,14 @@ export default function Spot() {
                                         </div>
                                         <p className="review-spots-text">{review.review}</p>
                                         {user && user.id === review.userId && (
-                                            <div >
-                                                <button type="submit" className="delete-review">Delete</button>
+
+                                            <div>
+                                                <button className="delete-review">
+                                                <OpenModalMenuItem
+                                                    itemText="Delete"
+                                                    modalComponent={<DeleteReviewForm review={review} />}
+                                                />
+                                                </button>
                                             </div>
                                         )}
                                     </div>
