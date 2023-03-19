@@ -4,6 +4,10 @@ import { useParams } from "react-router-dom";
 import { getSingleSpot } from "../../../store/spots";
 import { getSpotReviews } from "../../../store/reviews";
 
+import CreateReviewModal from "../../Reviews/CreateReviewModal";
+import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
+
+
 
 import "./Spot.css"
 
@@ -153,7 +157,12 @@ export default function Spot() {
             <div>
                 {spot.numReviews === 0 ? (
                     <div>
-                        <button className="post-review">Post Your Review</button>
+                        <button className="post-review">
+                        <OpenModalMenuItem
+                            itemText="Post Your Review"
+                            modalComponent={<CreateReviewModal spot={spot} />}
+                        />
+                        </button>
                         <p>Be the first to post a review!</p>
                     </div>
                 ) : (
