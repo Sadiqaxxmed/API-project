@@ -122,17 +122,16 @@ export default function Spot() {
                 </div>
                 <div className="reserve-top-right">
                         {typeof spot.avgStarRating === "number" ? (
-                            <h2 className="reserve-ratings"><i className="fa-solid fa-star" id="star-reserve"></i>   {rating(spot.avgStarRating).toFixed(1)}</h2>
+                            <h2 className="header-left"><i className="fa-solid fa-star" id="star-detail"></i>   {rating(spot.avgStarRating).toFixed(1)}</h2>
                         ) : (
-                            <h2 className="reserve-ratings"><i className="fa-solid fa-star" id="star-reserve"></i>   New</h2>
-
+                            <h2 className="header-left"><i className="fa-solid fa-star" id="star-detail"></i>   New</h2>
                         )}
-                        {spot.numReviews === 1 ? (
-                            <h2 className="reserve-reviews">• {spot.numReviews} review</h2>
-
+                        {spot.numReviews > 0 && (
+                            spot.numReviews === 1 ? (
+                            <h2 className="spot-reviews-number">• {spot.numReviews} review</h2>
                         ) : (
-                            <h2 className="reserve-reviews">• {spot.numReviews} reviews</h2>
-                        )}
+                            <h2 className="spot-reviews-number">• {spot.numReviews} reviews</h2>
+                        ))}
                 </div>
             </div>
                 <div className="reserve-bottom">
@@ -147,25 +146,31 @@ export default function Spot() {
                     ) : (
                         <h2 className="header-left"><i className="fa-solid fa-star" id="star-detail"></i>   New</h2>
                     )}
-                    {spot.numReviews === 1 ? (
+                    {spot.numReviews > 0 && (
+                    spot.numReviews === 1 ? (
                         <h2 className="spot-reviews-number">• {spot.numReviews} review</h2>
                     ) : (
                         <h2 className="spot-reviews-number">• {spot.numReviews} reviews</h2>
-                    )}
+                    ))}
                 </div>
+                {
+                    user && user.id !== spot.ownerId && noUserReview && (
+                    <div className="spot-reviews-header-right">
+                        <button className="post-review">
+                            <OpenModalMenuItem
+                                itemText="Post Your Review"
+                                modalComponent={<CreateReviewModal spot={spot} />}
+                            />
+                        </button>
+                    </div>
+                    )
+                }
         </div>
         <div className="spotDetail-reviews">
             {reviews && (
             <div>
                 {spot.numReviews === 0 ? (
                     <div>
-                        <button className="post-review">
-                        <OpenModalMenuItem
-                            itemText="Post Your Review"
-                            modalComponent={<CreateReviewModal spot={spot} />}
-                        />
-                        </button>
-
                         <p>Be the first to post a review!</p>
                     </div>
                 ) : (

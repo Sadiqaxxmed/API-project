@@ -20,17 +20,24 @@ export default function CreateReviewModal(spot) {
   const starArr = ["", "", "", "", ""];
 
   useEffect(() => {
+
     const valErrors = [];
+
     if (review.length < 10) valErrors.push("Review must be more than 10 characters");
     if (stars < 1) valErrors.push("Rating must be 1-5 stars");
+
     setErrors(valErrors);
 }, [review, stars]);
 
   const onSubmit = async (e) => {
+
       e.preventDefault();
 
     setHasSubmitted(true);
 
+    if (errors.length > 0) {
+      return;
+    }
 
       const newReview = {
           review,
@@ -41,6 +48,7 @@ export default function CreateReviewModal(spot) {
 
 
       const backToSpot = await dispatch(getSingleSpot(spot.id))
+      
       closeModal();
   }
 
