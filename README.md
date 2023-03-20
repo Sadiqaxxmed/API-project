@@ -17,3 +17,28 @@ Offszn is a peer-to-peer home hosting website that enables homeowners to connect
 ![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)
 
 
+## PREVIEW OF OFFSZN
+
+![LandingPage]
+
+[LandingPage]: ./Images/LandingPage.png
+
+![SpotDetail]
+
+[SpotDetail]: ./Images/SpotDetail.png
+
+![ManageSpot]
+
+[ManageSpot]: ./Images/ManageSpot.png
+
+![CreateSpotForm]
+
+[CreateSpotForm]: ./Images/CreateSpotForm.png
+
+![CreateReview]
+
+[CreateReview]: ./Images/CreateReview.png
+
+![SignUp]
+
+[SignUp]: ./Images/SignUp.png
