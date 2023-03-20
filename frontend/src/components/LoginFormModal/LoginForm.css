@@ -49,6 +49,35 @@ input {
   color: #ffffff;
   font-weight: bold;
   margin-bottom: 20px;
+
+}
+
+.login-button:hover {
+  cursor: pointer;
+}
+
+.login-disabled {
+  background-color: #e31c5f;
+  opacity: 0.5;
+  width: 102%;
+  border: none;
+  border-radius: 5px;
+  height: 50px;
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.demoLog-button{
+  display: flex;
+  justify-content: center;
+  text-decoration: underline;
+  margin-bottom: 10px;
+  color: blue;
+}
+
+.demoLog-button:hover {
+  cursor: pointer;
 }
 
 .errors-messages {
