@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 import { useHistory } from "react-router-dom";
 import { getUsersSpots } from "../../../store/spots";
 
 
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
-import EditSpotForm from "../EditSpot";
 import DeleteSpotsForm from "../DeleteSpots";
-import CreateSpotForm from '../CreateSpot';
 
 
 import "./UserSpots.css"
@@ -61,31 +62,26 @@ export default function UserSpots() {
         }
     }
 
-    const onClick = (spotId) => {
-        history.push(`/spots/${spotId}`)
-    }
-
     return (
         <>
         <div className="header-Manage-Spots">Manage Your Spots</div>
         <div className='Manage-create-spot'>
-                <OpenModalMenuItem
-                itemText="Create your spot"
-                modalComponent={<CreateSpotForm />}
-                />
+                <Link exact="true" to="/spots/new" className="manage-spot-text">
+                    Create a New Spot
+                </Link>
         </div>
         <div className="allSpots-container">
-
             {spots && (
                 spots.map((spot) => (
-                    < div key={spot.id} className="spot"
-                        onClick={() => onClick(spot.id)}>
-                        <div className="spotImg">
+                    <div key={spot.id} className="spot">
+                        <Link exact="true" to={`/spots/${spot.id}`} >
+                        <div className="spotImg"  >
                             <img
                                 className="spot-preImg"
                                 src={preview(spot.previewImage)}
                             />
                         </div>
+                        </Link>
                         <div className="spot-bottom-section">
                             <div className="spot-header">
                                 <p className="spotLocal">{spot.city}, {spot.state}</p>
@@ -98,37 +94,29 @@ export default function UserSpots() {
                                 )}
                             </div>
                             <div className="spot-footer">
-
                                 <div className="footer-left-Secion">
-
                                 <p className="price">${spot.price}</p>
                                 <p className="price-perNight">night</p>
-
-
-
                                 <div className="edit-option">
-                                <OpenModalMenuItem
-                                itemText="Update"
-                                modalComponent={<EditSpotForm spot={spot} />}
-                                />
+                                    <Link exact="true" to={`/spots/${spot.id}/edit`} spot={spot} className="update" >
+                                        Update
+                                    </Link>
                                 </div>
-
                                 <div className="delete-option">
-                                <OpenModalMenuItem
-                                itemText="Delete"
-                                modalComponent={<DeleteSpotsForm spot={spot} />}
-                                />
+                                    <Link exact="true" to={`/spots/${spot.id}`} className="update">
+                                        <OpenModalMenuItem
+                                        itemText="Delete"
+                                        modalComponent={<DeleteSpotsForm spot={spot} />}
+                                        />
+                                    </Link>
                                 </div>
-
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
                 ))
             )}
-        </div >
+        </div>
         </>
     )
 }

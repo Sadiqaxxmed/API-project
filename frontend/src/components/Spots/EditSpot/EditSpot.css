@@ -1,75 +1,157 @@
-.createSpot-form {
-  margin: auto;
-  margin-top: 20px;
+.update {
+  font-size: 15px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.spotForm-div {
+  display: block;
+  text-align: center;
+}
+
+.spot-form {
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  width: 500px;
+  padding: 20px 40px 20px;
+}
+
+.input-header, .input-description {
+  margin: 0;
+}
+
+.input-header {
+  padding: 15px 0px 5px;
+}
+
+.input-description {
+  padding: 0px 0px 10px;
+}
+
+.city-state-section {
+  display: grid;
+  grid-template-columns: 63% 2% 35%;
+}
+
+.comma {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.price-input {
+  display: flex;
+}
+
+.dollar-sign {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+}
+
+.spot-button-div {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+
+.spot-form input {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 400px;
-}
-
-.errors-messages {
-  list-style-type: none;
-  font-size: 12px;
-  padding: 5px;
-  color: #ff5a5f;
-}
-
-.title {
-  font-family: Roboto, Helvetica, sans-serif;
-  font-weight: bold;
-}
-
-.form {
-  width: 90%;
-}
-
-.input-fields {
-  margin: 0px;
-  position: relative;
+  margin-bottom: 5px;
   border-radius: 5px;
-  height: 100%;
+  padding: 5px;
+  margin-top: 5px;
 }
 
+.spot-form input, .description {
+  border-radius: 5px;
+  padding: 5px;
+  margin-top: 5px;
+}
+
+.city input {
+  width: 98%;
+}
 
 .description {
-  width: 100%;
-  resize: none;
-  outline: none;
-  padding-top: 7px;
+  border: groove gray;
+  box-sizing: border-box;
+  width: 500px;
+  height: 150px;
 }
 
-#imgUrl {
-  margin-bottom: 15px;
+.pricing-input input {
+  width: 100%
 }
 
-label {
-  position: absolute;
-  display: flex;
-  top: 0;
-  left: 0;
-  color: #817f7f;
-  align-items: center;
-  cursor: text;
-  padding: 2px;
-  padding-left: 4px;
-  font-family: Roboto, Helvetica, sans-serif;
-  font-size: 13px;
-  transition: 0.2s ease-in-out;
-}
-
-input {
-  width: 100%;
-  height: 45px;
-}
-
-.create-button {
-  background-color: rgb(227, 28, 95);
-  width: 102%;
-  border: none;
-  border-radius: 5px;
-  height: 48px;
+.createSpot-button {
+  background-color: #e31c5f;
   color: white;
   font-weight: bold;
+  width: 110px;
   margin-bottom: 15px;
+  border: none;
+  padding: 7px 10px 7px;
+  border-radius: 5px;
+}
+
+.createSpot-button:hover {
+  cursor: pointer;
+}
+
+
+.first-section {
+  border-bottom: solid gray;
+  padding-bottom: 10px;
+}
+
+.first-section input {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.first-section label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.third-section input {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.fifth-section input {
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 5px;
+}
+.second-section, .third-section, .fourth-section, .fifth-section {
+  border-bottom: solid gray;
+  padding-bottom: 30px;
+}
+
+.error {
+  font-family: 'Montserrat', sans-serif;
+  color: red;
+  margin-left: 5px;
+  font-size: 14px;
+}
+
+.preImgErr {
+  display: flex;
+  flex-direction: column;
+}
+
+
+input::placeholder, textarea::placeholder {
+  font-family: 'Montserrat', sans-serif;
 }

@@ -77,6 +77,10 @@
   margin-top: 15px;
   margin-left: 48px;
 }
+.manage-spot-text{
+  color: white;
+  text-decoration: none;
+}
 
 .edit-option {
   display: flex;

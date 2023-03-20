@@ -6,7 +6,6 @@ import './Navigation.css';
 
 import OpenModalMenuItem from './OpenModalMenuItem';
 import SignupFormModal from '../SignupFormModal';
-// import CreateSpotForm from '../Spots/CreateSpot';
 
 
 
@@ -26,8 +25,8 @@ function Navigation({ isLoaded }) {
                            <span className='create-spot'>
                            <NavLink exact to="/spots/new" className="create-new-spot nav-text">
                             Create a New Spot
-                          </NavLink>
-                       </span>
+                           </NavLink>
+                           </span>
                         ) : (
                             <span className='create-spot'>
                                 <div>
