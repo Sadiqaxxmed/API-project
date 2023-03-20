@@ -14,6 +14,7 @@ export default function CreateReviewModal(spot) {
 
   const [review, setReview] = useState("");
   const [stars, setStars] = useState("");
+  const [emptyField, setEmptyField] = useState('true');
   const [errors, setErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [hover, setHover] = useState(0);
@@ -22,6 +23,12 @@ export default function CreateReviewModal(spot) {
   useEffect(() => {
 
     const valErrors = [];
+
+    if (review.length < 10 || stars < 1) {
+
+      setEmptyField(true);
+
+    } else setEmptyField(false);
 
     if (review.length < 10) valErrors.push("Review must be more than 10 characters");
     if (stars < 1) valErrors.push("Rating must be 1-5 stars");
@@ -48,7 +55,7 @@ export default function CreateReviewModal(spot) {
 
 
       const backToSpot = await dispatch(getSingleSpot(spot.id))
-      
+
       closeModal();
   }
 
@@ -87,7 +94,10 @@ export default function CreateReviewModal(spot) {
             })}
         <p className="stars-text"><b>Stars</b></p>
       </div>
-        <button className="form-button form-text submit-review-button" type="submit" >Submit Your Review</button>
+        <button
+        className={emptyField ? "submit-review-button-disabled" : 'form-button form-text submit-review-button'}
+        disabled={Boolean(emptyField)}
+        type="submit" >Submit Your Review</button>
         </form>
     </div>
   );

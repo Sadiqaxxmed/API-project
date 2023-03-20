@@ -53,6 +53,18 @@ textarea::placeholder {
   margin-left: 15px;
 }
 
+.submit-review-button-disabled {
+  background-color: #e31c5f;
+  opacity: 0.5;
+  width: 102%;
+  border: none;
+  border-radius: 5px;
+  height: 50px;
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
 .submit-review-button:hover {
   cursor: pointer;
 }
