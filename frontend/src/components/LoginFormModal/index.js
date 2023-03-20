@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 
@@ -8,11 +9,23 @@ import "./LoginForm.css";
 function LoginFormModal() {
 
     const dispatch = useDispatch();
+    const close = useModal()
 
     const [credential, setCredential] = useState("");
     const [password, setPassword] = useState("");
+    const [emptyField, setEmptyField] = useState('true');
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
+
+    useEffect(() => {
+
+        if (credential.length < 4 || password.length < 6) {
+
+          setEmptyField(true);
+
+        } else setEmptyField(false);
+
+      }, [credential, password])
 
     const handleSubmit = (e) => {
 
@@ -28,6 +41,14 @@ function LoginFormModal() {
                 }
             );
     };
+
+    const demoSignIn = (e) => {
+        e.preventDefault();
+        const password = "password"
+        const credential = "demo@user.io"
+        dispatch(sessionActions.login({ credential, password }));
+        closeModal();
+    }
 
     return (
         <>
@@ -61,9 +82,14 @@ function LoginFormModal() {
                             required
                         />
                     </div>
-                    <button type="submit" className='login-button' id='log-button'>Log In</button>
+                    <button type="submit"
+                            className={emptyField ? "login-disabled" : 'login-button'}
+                            disabled={Boolean(emptyField)}
+                            id='log-button'>Log In</button>
                 </form>
             </div>
+
+            <span onClick={demoSignIn} type="submit" className='demoLog-button' id='demouser-log-button'>Demo User</span>
         </>
     );
 }
