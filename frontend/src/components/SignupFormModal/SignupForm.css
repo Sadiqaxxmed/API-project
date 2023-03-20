@@ -40,6 +40,17 @@ input {
   padding-top: 7px;
 }
 
+/* .signup-button  {
+  background-color: #e31c5f;
+  width: 102%;
+  border: none;
+  border-radius: 5px;
+  height: 50px;
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 20px;
+} */
+
 .signup-button  {
   background-color: #e31c5f;
   width: 102%;
@@ -49,8 +60,24 @@ input {
   color: #ffffff;
   font-weight: bold;
   margin-bottom: 20px;
+
 }
 
+.signup-button:hover {
+  cursor: pointer;
+}
+
+.signup-disabled {
+  background-color: #e31c5f;
+  opacity: 0.5;
+  width: 102%;
+  border: none;
+  border-radius: 5px;
+  height: 50px;
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
 .errors-messages {
   list-style-type: none;
   font-size: 12px;

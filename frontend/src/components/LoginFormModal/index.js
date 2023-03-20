@@ -88,7 +88,6 @@ function LoginFormModal() {
                             id='log-button'>Log In</button>
                 </form>
             </div>
-
             <span onClick={demoSignIn} type="submit" className='demoLog-button' id='demouser-log-button'>Demo User</span>
         </>
     );
