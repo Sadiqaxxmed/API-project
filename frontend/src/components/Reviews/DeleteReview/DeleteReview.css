@@ -45,6 +45,17 @@
   margin-bottom: 15px;
   cursor: pointer;
 }
+.keep-submit-button {
+  background-color: darkcyan;
+  width: 102%;
+  border: none;
+  border-radius: 5px;
+  height: 48px;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
 
 .errors {
   list-style-type: none;
