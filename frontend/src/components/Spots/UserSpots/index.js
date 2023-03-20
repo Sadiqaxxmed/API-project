@@ -42,9 +42,17 @@ export default function UserSpots() {
 
     if (!allSpots) {
         return (
-            <div className="title">
+            <>
+            <h2 className="noSpots-title">
                 You have no spots :\
-            </div>
+            </h2>
+            <div className='Manage-create-spot'>
+
+                <Link exact="true" to="/spots/new" className="manage-spot-text">
+                    Create a New Spot
+                </Link>
+        </div>
+        </>
         )
     }
 
