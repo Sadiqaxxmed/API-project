@@ -6,4 +6,5 @@ Offszn is a peer-to-peer home hosting website that enables homeowners to connect
 
 ### The languages & frameworks I used to complete this project are as follows:
 
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
