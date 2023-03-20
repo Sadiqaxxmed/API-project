@@ -30,6 +30,11 @@ export default function DeleteReviewForm(review) {
         closeModal();
     }
 
+    const keepReview = () => {
+
+        closeModal();
+    }
+
     return (
         <div className="delete-form-div">
             <h1 className="title">Are you sure you want to delete this review?</h1>
@@ -40,6 +45,7 @@ export default function DeleteReviewForm(review) {
             </ul>
             <form className="form">
                 <button type="submit" className="delete-submit-button" onClick={submitDelete}>Yes Delete This Review!</button>
+                <button type="submit" className="keep-submit-button" onClick={keepReview}>No Keep My Review!</button>
             </form>
         </div>
     )
