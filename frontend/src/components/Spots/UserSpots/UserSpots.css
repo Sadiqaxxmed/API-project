@@ -17,6 +17,9 @@
   cursor: pointer;
 }
 
+.noSpots-title{
+  padding-left: 40px;
+}
 .spotImg {
   width: 100%;
   height: 300px;
