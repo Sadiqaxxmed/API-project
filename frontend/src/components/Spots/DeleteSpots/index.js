@@ -34,7 +34,7 @@ export default function DeleteSpotForm(spot) {
         history.push("/")
     }
 
-    const keepReview = () => {
+    const keepSpot = () => {
 
         closeModal();
     }
@@ -51,7 +51,7 @@ export default function DeleteSpotForm(spot) {
                 className="form"
             >
                 <button type="submit" className="delete-button" id="deleteSpot-button" onClick={submitDelete}>Yes Delete My Spot!</button>
-                <button type="submit" className="keep-submit-button" onClick={keepReview}>No Keep My Review!</button>
+                <button type="submit" className="keep-submit-button" onClick={keepSpot}>No Keep My Spot!</button>
             </form>
         </div>
     )
