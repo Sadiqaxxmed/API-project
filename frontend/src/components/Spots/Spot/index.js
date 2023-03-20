@@ -13,6 +13,10 @@ import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 
 import "./Spot.css"
 
+function reserveClick() {
+    alert('Feature Coming Soon');
+};
+
 export default function Spot() {
     const { spotId } = useParams()
     const dispatch = useDispatch();
@@ -135,7 +139,7 @@ export default function Spot() {
                 </div>
             </div>
                 <div className="reserve-bottom">
-                    <button type="submit" className='login-button' id='log-button'>Reserve</button>
+                    <button type="submit" className='login-button' id='log-button'  onClick={reserveClick} >Reserve</button>
                 </div>
             </div>
           </div>

@@ -8,11 +8,14 @@ import Navigation from "./components/Navigation";
 import AllSpots from "./components/Spots/AllSpots";
 import Spot from "./components/Spots/Spot";
 import UserSpots from "./components/Spots/UserSpots";
+import CreateSpotForm from "./components/Spots/CreateSpot";
+import EditSpotForm from "./components/Spots/EditSpot";
 
 
 
 import "./index.css"
-import CreateSpotForm from "./components/Spots/CreateSpot";
+
+
 
 
 function App() {
@@ -35,6 +38,9 @@ function App() {
           </Route>
           <Route exact path="/my-spots">
             <UserSpots />
+          </Route>
+          <Route exact path="/spots/:spotId/edit">
+            <EditSpotForm />
           </Route>
           <Route exact path="/spots/:spotId">
             <Spot />
